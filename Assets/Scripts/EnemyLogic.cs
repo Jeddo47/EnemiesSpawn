@@ -3,15 +3,17 @@ using UnityEngine;
 public class EnemyLogic : MonoBehaviour
 {
     [SerializeField] private float _speed;
-    private Vector3 _direction;
+
+    private Transform _target;
 
     private void Update()
     {
-        transform.Translate(_direction.normalized * _speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, _target.position, _speed * Time.deltaTime);
+        transform.LookAt(_target);
     }
 
-    public void SetDirection(Vector3 direction)
+    public void SetTarget(Transform target)
     {
-        _direction = direction;
+        _target = target;
     }
 }
