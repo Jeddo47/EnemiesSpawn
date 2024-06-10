@@ -24,14 +24,7 @@ public class Spawner : MonoBehaviour
         SpawnTargets();
         StartCoroutine(StartEnemySpawning());
     }
-
-    public List<Transform> GetWaypoints()
-    {
-        List<Transform> waypointsClone = _waypoints;
         
-        return waypointsClone;
-    }
-
     private void AssignLists()
     {
         _spawnPoints = new List<SpawnPointInfo>() { _spawnPointA, _spawnPointB, _spawnPointC, _spawnPointD };
