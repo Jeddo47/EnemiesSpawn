@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyLogic : MonoBehaviour
+public class TargetFollower : MonoBehaviour
 {
     [SerializeField] private float _speed;
 

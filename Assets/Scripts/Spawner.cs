@@ -4,29 +4,19 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private Transform _spawnPointA;
-    [SerializeField] private Transform _spawnPointB;
-    [SerializeField] private Transform _spawnPointC;
-    [SerializeField] private Transform _spawnPointD;
+    [SerializeField] private SpawnPointInfo _spawnPointA;
+    [SerializeField] private SpawnPointInfo _spawnPointB;
+    [SerializeField] private SpawnPointInfo _spawnPointC;
+    [SerializeField] private SpawnPointInfo _spawnPointD;
     [SerializeField] private Transform _waypointA;
     [SerializeField] private Transform _waypointB;
     [SerializeField] private Transform _waypointC;
     [SerializeField] private Transform _waypointD;
-    [SerializeField] private EnemyLogic _enemyAPrefab;
-    [SerializeField] private EnemyLogic _enemyBPrefab;
-    [SerializeField] private EnemyLogic _enemyCPrefab;
-    [SerializeField] private EnemyLogic _enemyDPrefab;
-    [SerializeField] private TargetLogic _targetAPrefab;
-    [SerializeField] private TargetLogic _targetBPrefab;
-    [SerializeField] private TargetLogic _targetCPrefab;
-    [SerializeField] private TargetLogic _targetDPrefab;
     [SerializeField] private float _spawnDelay;
 
-    private List<Transform> _spawnPoints;
+    private List<SpawnPointInfo> _spawnPoints;
     private List<Transform> _waypoints;
-    private List<EnemyLogic> _enemies;
-    private List<TargetLogic> _targetsPrefabs;
-    private List<TargetLogic> _targetsOnScene;
+    private List<PathFollower> _targetsOnScene;
 
     private void Awake()
     {
@@ -37,24 +27,24 @@ public class Spawner : MonoBehaviour
 
     public List<Transform> GetWaypoints()
     {
-        return _waypoints;
+        List<Transform> waypointsClone = _waypoints;
+        
+        return waypointsClone;
     }
 
     private void AssignLists()
     {
-        _spawnPoints = new List<Transform>() { _spawnPointA, _spawnPointB, _spawnPointC, _spawnPointD };
-        _waypoints = new List<Transform>() { _waypointA, _waypointB, _waypointC, _waypointD };
-        _enemies = new List<EnemyLogic>() { _enemyAPrefab, _enemyBPrefab, _enemyCPrefab, _enemyDPrefab };
-        _targetsPrefabs = new List<TargetLogic>() { _targetAPrefab, _targetBPrefab, _targetCPrefab, _targetDPrefab };
-        _targetsOnScene = new List<TargetLogic>() { };
+        _spawnPoints = new List<SpawnPointInfo>() { _spawnPointA, _spawnPointB, _spawnPointC, _spawnPointD };
+        _waypoints = new List<Transform>() { _waypointA, _waypointB, _waypointC, _waypointD };        
+        _targetsOnScene = new List<PathFollower>() { };
     }
 
     private void SpawnTargets()
     {
-        for (int i = 0; i < _targetsPrefabs.Count; i++)
+        for (int i = 0; i < _spawnPoints.Count; i++)
         {
-            TargetLogic target = Instantiate(_targetsPrefabs[i], _spawnPoints[i].position, Quaternion.identity);
-
+            PathFollower target = Instantiate(_spawnPoints[i].Target, _spawnPoints[i].transform.position, Quaternion.identity);
+            target.AssignWaypoints(new List<Transform> (_waypoints) );
             _targetsOnScene.Add(target);
         }
     }
@@ -78,7 +68,7 @@ public class Spawner : MonoBehaviour
         int index = Random.Range(minIndex, maxIndex);
         Vector3 direction = new Vector3(Random.Range(-Random.value, Random.value), 0, Random.Range(-Random.value, Random.value));
 
-        EnemyLogic enemy = Instantiate(_enemies[index], _spawnPoints[index].position, Quaternion.identity);
+        TargetFollower enemy = Instantiate(_spawnPoints[index].Enemy, _spawnPoints[index].transform.position, Quaternion.identity);
 
         enemy.SetTarget(_targetsOnScene[index].transform);
     }
