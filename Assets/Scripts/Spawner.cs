@@ -48,8 +48,7 @@ public class Spawner : MonoBehaviour
     {
         int minIndex = 0;
         int maxIndex = _spawnPoints.Length;
-        int index = Random.Range(minIndex, maxIndex);
-        Vector3 direction = new Vector3(Random.Range(-Random.value, Random.value), 0, Random.Range(-Random.value, Random.value));
+        int index = Random.Range(minIndex, maxIndex);        
 
         TargetFollower enemy = Instantiate(_spawnPoints[index].Enemy, _spawnPoints[index].transform.position, Quaternion.identity);
 
