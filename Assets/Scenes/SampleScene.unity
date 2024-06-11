@@ -807,14 +807,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9910da12423f6f4eb5c6c8cd128ec7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnPointA: {fileID: 756417612}
-  _spawnPointB: {fileID: 1589509632}
-  _spawnPointC: {fileID: 1509312669}
-  _spawnPointD: {fileID: 671161543}
-  _waypointA: {fileID: 1564927032}
-  _waypointB: {fileID: 931623406}
-  _waypointC: {fileID: 976162942}
-  _waypointD: {fileID: 1067345145}
+  _spawnPoints:
+  - {fileID: 756417612}
+  - {fileID: 1589509632}
+  - {fileID: 1509312669}
+  - {fileID: 671161543}
+  _waypoints:
+  - {fileID: 1564927032}
+  - {fileID: 931623406}
+  - {fileID: 976162942}
+  - {fileID: 1067345145}
   _spawnDelay: 2
 --- !u!4 &1847409195
 Transform:
